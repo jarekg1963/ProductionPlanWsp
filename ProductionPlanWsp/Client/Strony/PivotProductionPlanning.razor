@@ -1,0 +1,59 @@
+﻿@page "/PivotProductionPlanningPage"
+@using ProductionPlanWsp.Shared;
+@inject HttpClient Http;
+@using Syncfusion.Blazor.PivotView
+@using Syncfusion.Blazor.Buttons
+
+<h3>Production vs Planning</h3>
+
+<SfPivotView   TValue="VwPlanningProduction" ShowFieldList="true" Height="700" AllowPdfExport="true" AllowExcelExport="true" ShowGroupingBar="true" EnableVirtualization="true" EnableValueSorting="true">
+    <PivotViewDataSourceSettings DataSource="@listpp">
+        <PivotViewColumns>
+            <PivotViewColumn Name="Week"></PivotViewColumn>
+            <PivotViewRows>
+                <PivotViewRow Name="Ctv"></PivotViewRow>
+                <PivotViewValues>
+                    <PivotViewValue Name="PlanningQuatity" Caption="Planning"></PivotViewValue>
+                    <PivotViewValue Name="CalculatedTotalWeeklyProduction" Caption="Production"></PivotViewValue>
+                </PivotViewValues>
+            </PivotViewRows>
+
+        </PivotViewColumns>
+    </PivotViewDataSourceSettings>
+</SfPivotView>
+
+
+<style>
+
+    .e-pivotview .e-headercell {
+        background-color: thistle !important;
+    }
+
+    .e-pivotview .e-rowsheader {
+        background-color: skyblue !important;
+    }
+
+    .e-pivotview .e-summary:not(.e-gtot) {
+        background-color: pink !important;
+    }
+
+    .e-pivotview .e-gtot {
+        background-color: greenYellow !important;
+    }
+</style>
+
+@code {
+    SfPivotView<VwPlanningProduction> pivot;
+    public VwPlanningProduction[] ppList = { };
+    List<VwPlanningProduction> listpp = new List<VwPlanningProduction>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        string linktmp = "/api/planningProduction";
+        ppList = await Http.GetFromJsonAsync<VwPlanningProduction[]>(linktmp);
+
+        listpp = new List<VwPlanningProduction>(ppList);
+    }
+
+  
+}

@@ -1,0 +1,39 @@
+﻿@page "/PagePlanningProduction"
+@using Syncfusion.Blazor.Grids
+@using ProductionPlanWsp.Shared;
+@inject HttpClient Http;
+
+<h4>Planning - Production</h4>
+
+<div class="row">
+    <div class="col-12">
+        <SfGrid DataSource="@listpp" Height="600px" Width="100%" RowHeight="22" AllowSorting="true" AllowFiltering="true" AllowPaging="true" EnableVirtualization="true">
+            @*<GridPageSettings PageSize="20"></GridPageSettings>*@
+            <GridColumns>
+                <GridColumn Field=@nameof(VwPlanningProduction.Ctv) HeaderText="CTV" TextAlign="TextAlign.Left" Width="80"></GridColumn>
+                <GridColumn Field=@nameof(VwPlanningProduction.Week) HeaderText="Week" TextAlign="TextAlign.Left" Width="80"></GridColumn>
+                <GridColumn Field=@nameof(VwPlanningProduction.PlanningQuatity) HeaderText="Plainning qty" TextAlign="TextAlign.Left" Width="60"></GridColumn>
+                @*<GridColumn Field=@nameof(VwPlanningProduction.Year) HeaderText="Year" TextAlign="TextAlign.Left" Width="80"></GridColumn>
+            <GridColumn Field=@nameof(VwPlanningProduction.WeekNumber) HeaderText="Week nr" TextAlign="TextAlign.Left" Width="80"></GridColumn>*@
+                <GridColumn Field=@nameof(VwPlanningProduction.CalculatedTotalWeeklyProduction) HeaderText="Calculated production" TextAlign="TextAlign.Left" Width="60"></GridColumn>
+                <GridColumn Field=@nameof(VwPlanningProduction.ProductionWeekNo) HeaderText="Production week" TextAlign="TextAlign.Left" Width="60"></GridColumn>
+
+            </GridColumns>
+        </SfGrid>
+
+    </div>
+    </div>
+
+        @code {
+
+            public VwPlanningProduction[] ppList = { };
+            List<VwPlanningProduction> listpp = new List<VwPlanningProduction>();
+
+            protected override async Task OnInitializedAsync()
+            {
+                string linktmp = "/api/planningProduction";
+                ppList = await Http.GetFromJsonAsync<VwPlanningProduction[]>(linktmp);
+
+                listpp = new List<VwPlanningProduction>(ppList);
+            }
+        }
