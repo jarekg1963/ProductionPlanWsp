@@ -18,6 +18,7 @@ namespace ProductionPlanWsp.Server.Data
         }
 
         public virtual DbSet<VwPlanningProduction> VwPlanningProduction { get; set; }
+        public virtual DbSet<VwPoPlanningProduction> VwPoPlanningProduction { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +31,27 @@ namespace ProductionPlanWsp.Server.Data
                 entity.Property(e => e.Ctv)
                     .HasColumnName("CTV")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.Week)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.WeekNumber).HasColumnName("Week_number");
+
+                entity.Property(e => e.Year).HasMaxLength(4);
+            });
+
+            modelBuilder.Entity<VwPoPlanningProduction>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_PO_Planning_Production");
+
+                entity.Property(e => e.Ctv)
+                    .HasColumnName("CTV")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.PoQty).HasColumnName("PO_QTY");
 
                 entity.Property(e => e.Week)
                     .HasMaxLength(10)

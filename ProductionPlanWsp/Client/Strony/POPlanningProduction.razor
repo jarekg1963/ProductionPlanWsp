@@ -1,12 +1,12 @@
-﻿@page "/PivotProductionPlanningPage"
+﻿@page "/PoPlanningProdPage"
 @using ProductionPlanWsp.Shared;
 @inject HttpClient Http;
 @using Syncfusion.Blazor.PivotView
 @using Syncfusion.Blazor.Buttons
 
-<h3>Production vs Planning</h3>
+<h3>POPlanningProduction</h3>
 
-<SfPivotView   TValue="VwPlanningProduction" ShowFieldList="true" Height="700" AllowPdfExport="true" AllowExcelExport="true" ShowGroupingBar="true" EnableVirtualization="true" EnableValueSorting="true">
+<SfPivotView TValue="VwPoPlanningProduction" ShowFieldList="true" Height="700" AllowPdfExport="true" AllowExcelExport="true" ShowGroupingBar="true" EnableVirtualization="true" EnableValueSorting="true">
     <PivotViewDataSourceSettings DataSource="@listpp">
         <PivotViewColumns>
             <PivotViewColumn Name="Week"></PivotViewColumn>
@@ -15,6 +15,10 @@
                 <PivotViewValues>
                     <PivotViewValue Name="PlanningQuatity" Caption="Planning"></PivotViewValue>
                     <PivotViewValue Name="CalculatedTotalWeeklyProduction" Caption="Production"></PivotViewValue>
+                    
+                    <PivotViewValue Name="ProductionDelta" Caption="ProductionDelta"></PivotViewValue>
+                    <PivotViewValue Name="PODelta" Caption="PODelta"></PivotViewValue>
+                    <PivotViewValue Name="PoQty" Caption="PoQty"></PivotViewValue>
                 </PivotViewValues>
             </PivotViewRows>
 
@@ -43,18 +47,15 @@
 </style>
 
 @code {
-    // Commit 2 test 
-    SfPivotView<VwPlanningProduction> pivot;
-    public VwPlanningProduction[] ppList = { };
-    List<VwPlanningProduction> listpp = new List<VwPlanningProduction>();
+    public VwPoPlanningProduction[] ppList = { };
+    List<VwPoPlanningProduction> listpp = new List<VwPoPlanningProduction>();
 
     protected override async Task OnInitializedAsync()
     {
         string linktmp = "/api/planningProduction";
-        ppList = await Http.GetFromJsonAsync<VwPlanningProduction[]>(linktmp);
+        ppList = await Http.GetFromJsonAsync<VwPoPlanningProduction[]>(linktmp);
 
-        listpp = new List<VwPlanningProduction>(ppList);
+        listpp = new List<VwPoPlanningProduction>(ppList);
     }
 
-  
 }

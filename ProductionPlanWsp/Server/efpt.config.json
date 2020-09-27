@@ -15,6 +15,10 @@
       {
          "HasPrimaryKey": true,
          "Name": "[dbo].[VW_Planning_Production]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[VW_PO_Planning_Production]"
       }
    ],
    "UseDatabaseNames": false,
