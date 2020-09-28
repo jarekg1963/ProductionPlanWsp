@@ -52,7 +52,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        string linktmp = "/api/planningProduction";
+        string linktmp = "/api/POProduction";
         ppList = await Http.GetFromJsonAsync<VwPoPlanningProduction[]>(linktmp);
 
         listpp = new List<VwPoPlanningProduction>(ppList);
